@@ -11,51 +11,91 @@
 		<link rel="stylesheet" href="css/styles.css?v=1.0">
 	</head>
 
-	<body>
-		<div>
-			<h1>
-				<span> SuperMarket </span>
-				<br>
-				<span> Balance: </span>
-				<span id="Balance"> 0 </span>
-			</h1>
+	<center>
+		<body>
+			<div>
+				<h1>
+					<span> SuperMarket Model</span>
+				</h1>
 
-			<table id="Tweaking Table">
-				<tr>
-					<th>Parameter</th>
-					<th>Tweaking</th>
-				</tr>
-				<tr>
-					<td> MaxQueueLenght </td>
-					<td> <input id="Tweaking_MaxQueueLenght" type="text" name="fname"><br> </td>
-				</tr>
-				<tr>
-					<td> MaxCashBoxes </td>
-					<td> <input id="Tweaking_MaxCashBoxes" type="text" name="fname"><br> </td>
-				</tr>
-				<tr>
-					<td> CommercialExpenses </td>
-					<td> <input id="Tweaking_CommercialExpenses" type="text" name="fname"><br> </td>
-				</tr>
-				<tr>
-					<td> Discount </td>
-					<td> <input id="Tweaking_Discount" type="text" name="fname"><br> </td>
-				</tr>
-				<tr>
-					<td> Balance </td>
-					<td> <input id="Tweaking_Balance" type="text" name="fname"><br> </td>
-				</tr>
-				<tr>
-					<td> CashierSalary </td>
-					<td> <input id="Tweaking_CashierSalary" type="text" name="fname"><br> </td>
-				</tr>
-			</table>
-		</div>
-		<div>
-			Some text in div
-		</div>
-		<script src="js/config.js" ></script>
-		<script src="js/supermarket.js" ></script>
-		<script src="js/main.js" ></script>
-	</body>
+				<table id="Tweaking Table">
+					<tr>
+						<th>Parameter</th>
+						<th>Tweaking</th>
+					</tr>
+					<tr>
+						<td> MaxQueueLenght</td>
+						<td><input id="MaxQueueLength" type="text" ><br></td>
+					</tr>
+					<tr>
+						<td> MaxCashBoxes</td>
+						<td><input id="MaxCashBoxes" type="text" ><br></td>
+					</tr>
+					<tr>
+						<td> CommercialExpenses</td>
+						<td><input id="CommercialExpenses" type="text" ><br></td>
+					</tr>
+					<tr>
+						<td> Discount</td>
+						<td><input id="Discount" type="text" ><br></td>
+					</tr>
+					<tr>
+						<td> CashierSalary</td>
+						<td><input id="CashierSalary" type="text" ><br></td>
+					</tr>
+					<tr>
+						<td> CustomerProfit</td>
+						<td><input id="CustomerProfit" type="text" ><br></td>
+					</tr>
+					<tr>
+						<td> ProbabilityDistribution</td>
+						<td><input id="ProbabilityDistribution" type="text" ><br></td>
+					</tr>
+					<tr>
+						<td> LeftBoundary</td>
+						<td><input id="LeftBoundary" type="text" ><br></td>
+					</tr>
+					<tr>
+						<td> RightBoundary</td>
+						<td><input id="RightBoundary" type="text" ><br></td>
+					</tr>
+					<tr>
+						<td> BoundaryTweakValue</td>
+						<td><input id="BoundaryTweakValue" type="text" ><br></td>
+					</tr>
+					<tr>
+						<td> MinServiceTime</td>
+						<td><input id="MinServiceTime" type="text" ><br></td>
+					</tr>
+					<tr>
+						<td> MaxServiceTime</td>
+						<td><input id="MaxServiceTime" type="text" ><br></td>
+					</tr>
+					<tr>
+						<td> MinPrice</td>
+						<td><input id="MinPrice" type="text" ><br></td>
+					</tr>
+					<tr>
+						<td> MaxPrice</td>
+						<td><input id="MaxPrice" type="text" ><br></td>
+					</tr>
+				</table>
+			</div>
+			<br>
+			<br>
+			<br>
+			<br>
+			<br>
+			<div>
+				<button type="button">Start Modeling</button>
+			</div>
+			<script src="js/config.js" ></script>
+			<script src="js/supermarket.js" ></script>
+			<script src="js/customer_generator.js" ></script>
+			<script src="js/cashbox.js" ></script>
+			<script src="js/customer.js" ></script>
+			<script src="js/model.js" ></script>
+			<script src="js/main.js" ></script>
+		</body>
+	</center>
 </html>

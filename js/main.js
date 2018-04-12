@@ -1,4 +1,1 @@
-var Model = {
-	SuperMarket : new SuperMarket,
-	CustomerGenerator : ''
-}
+var Model = new SMModel
