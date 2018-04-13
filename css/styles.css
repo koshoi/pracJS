@@ -7,3 +7,23 @@ html {
 .cashbox {
 	background-color: #8080F2;
 }
+.column1 {
+	background-color: #B0B0B0;
+	float: left;
+	width: 70%;
+	height: 100vh;
+}
+.log {
+	background-color: #DDDDDD;
+	float: left;
+	width: 30%;
+	height: 70vh;
+}
+.grid {
+	background-color: #AAAAAA;
+	width: 100%;
+	height: 100vh;
+}
+.grid-elem {
+	border-style: solid;
+}

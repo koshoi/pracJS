@@ -1,8 +1,9 @@
 class CashBox {
-	constructor() {
+	constructor(id) {
 		this.Queue           = new Array ()
 		this.Working         = true
 		this.CurrentCustomer = null
+		this.Id              = id
 	}
 
 	takeCustomer(customer) {

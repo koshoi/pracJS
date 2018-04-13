@@ -9,7 +9,7 @@ class SuperMarket {
 		this.CustomerProfit     = cfg.CustomerProfit     || 0.09
 		this.CashBoxes          = new Array()
 		for (var i = 0; i < this.MaxCashBoxes; i++) {
-			this.CashBoxes.push(new CashBox ())
+			this.CashBoxes.push(new CashBox (i))
 		}
 	}
 
