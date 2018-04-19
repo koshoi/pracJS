@@ -1,7 +1,9 @@
 html {
 	background-color: #D0D0D0;
+	font-family: "R Envy Code", "Inconsolata", Times, serif;
 }
 .customer {
+	align-text: bottom;
 	background-color: #60F16F;
 }
 .cashbox {
@@ -18,12 +20,18 @@ html {
 	float: left;
 	width: 30%;
 	height: 70vh;
+	font-size: 30px;
 }
 .grid {
 	background-color: #AAAAAA;
 	width: 100%;
 	height: 100vh;
+	border-style: solid;
 }
 .grid-elem {
+	border-style: solid;
+}
+.run-params {
+	height: 65vh;
 	border-style: solid;
 }

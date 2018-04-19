@@ -1,6 +1,6 @@
 var Config = {
 	SuperMarket : {
-		MaxQueueLength     : 3,
+		MaxQueueLength     : 7,
 		MaxCashBoxes       : 5,
 		CommercialExpenses : 0,
 		Discount           : 0,
@@ -11,7 +11,8 @@ var Config = {
 		ProbabilityDistribution : 'normal',
 		LeftBoundary            : 0,
 		RightBoundary           : 10,
-		BoundaryTweakValue      : 0.2,
+		CustomerLeavingPenalty  : 0.5,
+		CommercialExpensesBoost : 10,
 		CustomerConfig          : {
 			MinServiceTime : 1,
 			MaxServiceTime : 10,
@@ -22,7 +23,7 @@ var Config = {
 }
 
 var SMParams = ['MaxQueueLength', 'MaxCashBoxes', 'CommercialExpenses', 'Discount', 'CashierSalary', 'CustomerProfit']
-var CGParams = ['ProbabilityDistribution', 'LeftBoundary', 'RightBoundary', 'BoundaryTweakValue']
+var CGParams = ['ProbabilityDistribution', 'LeftBoundary', 'RightBoundary', 'CustomerLeavingPenalty', 'CommercialExpensesBoost', 'DiscountBoost']
 var CCParams = ['MinServiceTime', 'MaxServiceTime', 'MinPrice', 'MaxPrice']
 
 for (var i = 0; i < SMParams.length; i++) {

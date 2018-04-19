@@ -18,17 +18,30 @@ class Render {
 	}
 
 	newElement (id, data) {
-		var row = document.createElement("td")
-		row.id = id
-		row.appendChild(document.createTextNode(data))
-		return row
+		var elem = document.createElement("td")
+		elem.id = id
+		elem.appendChild(document.createTextNode(data))
+		elem.classList.add('grid-elem')
+		return elem
 	}
 
-	makeGrid(rows, columns, prefix) {
-		for (var i=0; i<rows; i++) {
-			var row_arr = new Array (columns)
+	makeGrid(rows, columns) {
+		var grid = document.createElement('table')
+		for (var i=rows-1; i>=0; i--) {
+			var row_arr = new Array ()
 			for (var j=0; j<columns; j++) {
+				var id = 'grid:' + i + ':' + j
+				row_arr.push(this.newElement(id, '[[data for ' + id + ']]'))
 			}
+			var row = this.newRow(row_arr)
+			grid.appendChild(row)
 		}
+		grid.classList.add('grid')
+		return grid
+	}
+
+	getGridElem(row, column) {
+		var id = 'grid:' + row + ':' + column
+		return document.getElementById(id)
 	}
 }

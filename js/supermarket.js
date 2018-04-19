@@ -15,7 +15,7 @@ class SuperMarket {
 
 	tick() {
 		for (var i = 0; i < this.CashBoxes.length; i++) {
-			this.Balance += this.CashBoxes[i].tick() * (1 - this.Discount) * this.CustomerProfit
+			this.Balance += this.CashBoxes[i].tick() * (1 - this.Discount / 100) * this.CustomerProfit
 		}
 	}
 
@@ -50,6 +50,11 @@ class SuperMarket {
 		var working = this.CashBoxes.filter(function (a) {
 			return a.Working
 		})
+		var delta = this.CommercialExpenses + this.CashierSalary * working.length
 		this.Balance -= this.CommercialExpenses + this.CashierSalary * working.length
+	}
+
+	toString() {
+		return '<b>Balance</b>: ' + Math.round(this.Balance) + '<br>'
 	}
 }

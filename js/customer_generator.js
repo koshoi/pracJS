@@ -29,8 +29,11 @@ class _normalProbability {
 class CustomerGenerator {
 	constructor(cfg) {
 		this.ProbabilityDistribution = cfg.ProbabilityDistribution || 'even'
-		this.LeftBoundary  = cfg.LeftBoundary  || 0
-		this.RightBoundary = cfg.RightBoundary || 10
+		this.LeftBoundary            = cfg.LeftBoundary            || 0
+		this.RightBoundary           = cfg.RightBoundary           || 10
+		this.CommercialExpensesBoost = cfg.CommercialExpensesBoost || 10
+		this.CustomerLeavingPenalty  = cfg.CustomerLeavingPenalty  || 0.5
+		this.DiscountBoost           = cfg.DiscountBoost           || 0.5
 		if (this.ProbabilityDistribution === 'even') {
 			this.ProbabilityEngine = new _evenProbability(cfg.LeftBoundary || 0, cfg.RightBoundary || 10)
 		} else {
@@ -40,7 +43,6 @@ class CustomerGenerator {
 				cfg.NormalCount || 10
 			)
 		}
-		this.BoundaryTweakValue = cfg.BoundaryTweakValue || 0.1
 		this.NextCustomerTimeLeft = this.ProbabilityEngine.getValue()
 
 		this.CustomerEngine = {}
@@ -59,18 +61,21 @@ class CustomerGenerator {
 		this.ProbabilityEngine.b = this.RightBoundary
 	}
 
-	probabilityUp() {
-		this.ProbabilityEngine.b -= this.BoundaryTweakValue
+	probabilityUp(percentage) {
+		var d = this.ProbabilityEngine.b - this.ProbabilityEngine.a
+		this.ProbabilityEngine.b -= d * percentage / 100
 		if (this.ProbabilityEngine.b - this.ProbabilityEngine.a < 1) {
 			this.ProbabilityEngine.a++
 		}
 	}
 
-	probabilityDown() {
-		this.ProbabilityEngine.b += this.BoundaryTweakValue
+	probabilityDown(percentage) {
+		var d = this.ProbabilityEngine.b - this.ProbabilityEngine.a
+		this.ProbabilityEngine.b += d * percentage / 100
 	}
 
 	generateCustomer() {
+		this.NextCustomerTimeLeft = this.ProbabilityEngine.getValue()
 		return new Customer (
 			this.CustomerEngine.TimeEngine.getValue(),
 			this.CustomerEngine.PriceEngine.getValue()
@@ -84,5 +89,11 @@ class CustomerGenerator {
 
 		this.NextCustomerTimeLeft--
 		return null
+	}
+
+	toString() {
+		return '<b>LeftBoundary</b>: ' + this.ProbabilityEngine.a + '<br>' +
+			'<b>RightBoundary</b>: ' + this.ProbabilityEngine.b + '<br>' +
+			'<b>NextCustomerTimeLeft</b>: ' + this.NextCustomerTimeLeft + '<br>'
 	}
 }

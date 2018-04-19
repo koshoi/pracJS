@@ -11,7 +11,7 @@
 		<link rel="stylesheet" href="css/styles.css?v=1.0">
 	</head>
 
-	<center id="setup" hidden>
+	<center id="setup">
 		<body>
 			<div>
 				<h1>
@@ -60,8 +60,16 @@
 						<td><input id="RightBoundary" type="text" ><br></td>
 					</tr>
 					<tr>
-						<td> BoundaryTweakValue</td>
-						<td><input id="BoundaryTweakValue" type="text" ><br></td>
+						<td> CustomerLeavingPenalty</td>
+						<td><input id="CustomerLeavingPenalty" type="text" ><br></td>
+					</tr>
+					<tr>
+						<td> CommercialExpensesBoost(per 10.000)</td>
+						<td><input id="CommercialExpensesBoost" type="text" ><br></td>
+					</tr>
+					<tr>
+						<td>DiscountBoost</td>
+						<td><input id="DiscountBoost" type="text" ><br></td>
 					</tr>
 					<tr>
 						<td> MinServiceTime</td>
@@ -87,23 +95,34 @@
 			<br>
 			<br>
 			<div>
-				<button type="button">Start Modeling</button>
+				<button id="start-button" type="button">Start Modeling</button>
 			</div>
 		</body>
 	</center>
-	<div id="runtime" >
-		<div class="column1">
-			<table id=grid" class="grid">
+	<div id="runtime" hidden>
+		<div id="queues" class="column1">
+		</div>
+		<div id="stat" class="log"> Col2 </div>
+		<div id="control" class="run-params">
+			<table>
+			<tr>
+				<td>Ticks per iteration</td>
+				<td><input id="TicksPerIteration" type="text" ><br></td>
+			</tr>
+			<tr>
+				<td><button id="iterate-button" type="button">Iterate</button></td>
+			</tr>
 			</table>
 		</div>
-		<div class="log"> Col2 </div>
 	</div>
+	<h1 id="results" hidden>
+	</h1>
 	<script src="js/config.js" ></script>
 	<script src="js/supermarket.js" ></script>
 	<script src="js/customer_generator.js" ></script>
 	<script src="js/cashbox.js" ></script>
 	<script src="js/customer.js" ></script>
-	<script src="js/model.js" ></script>
 	<script src="js/render.js" ></script>
+	<script src="js/model.js" ></script>
 	<script src="js/main.js" ></script>
 </html>
