@@ -13,6 +13,7 @@ var Config = {
 		RightBoundary           : 10,
 		CustomerLeavingPenalty  : 0.5,
 		CommercialExpensesBoost : 10,
+		DiscountBoost           : 0.5,
 		CustomerConfig          : {
 			MinServiceTime : 1,
 			MaxServiceTime : 10,

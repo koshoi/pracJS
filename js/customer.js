@@ -1,6 +1,6 @@
 class Customer {
 	constructor(time, price) {
-		this.Id    = Math.random().toString(36).substring(7);
+		this.Id    = Math.random().toString(36).substring(5);
 		this.Time  = time
 		this.Price = price
 	}

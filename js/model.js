@@ -1,4 +1,9 @@
-var Days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+var Days         = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+var DaysActivity = [0,      0,     0,     20,    30,    40,    40  ]
+//                    0    1    2    3    4    5    6    7    8    9    10   11   12
+var HoursActivity = [ -60, -65, -70, -80, -85, -80, -75, -60, -40, -30, -20, -10, 0,
+//                    13   14   15   16   17   18   19   20   21   22   23   24
+                      0,   0,   5,   10,  20,  30,  60,  50,  30,  20,  0,   -20 ]
 
 class SMModel {
 	constructor() {
@@ -17,6 +22,9 @@ class SMModel {
 			* this.CustomerGenerator.CommercialExpensesBoost
 			/ 10000
 		)
+		this.CustomerGenerator.probabilityUp(
+			this.SuperMarket.Discount * this.CustomerGenerator.DiscountBoost
+		)
 
 		this.Time = {}
 		this.Time.TicksTaken = 0
@@ -29,13 +37,19 @@ class SMModel {
 	}
 
 	tick(n_ticks) {
+		if (!this.Working) {
+			return 0
+		}
 		for (var i=0; i<n_ticks; i++) {
 			this.SuperMarket.tick()
-			var customer = this.CustomerGenerator.tick()
-			if (customer !== null) {
-				if (!this.SuperMarket.takeCustomer(customer)) {
-					this.CustomerGenerator.probabilityDown(this.CustomerGenerator.CustomerLeavingPenalty)
-					this.Runtime.Stat.CustomersLeft++
+			var customers = this.CustomerGenerator.tick()
+			if (customers.length) {
+				for (var j=0; j<customers.length; j++) {
+					var customer = customers[j]
+					if (!this.SuperMarket.takeCustomer(customer)) {
+						this.CustomerGenerator.probabilityDown(this.CustomerGenerator.CustomerLeavingPenalty)
+						this.Runtime.Stat.CustomersLeft++
+					}
 				}
 			}
 			this.incTime()
@@ -46,6 +60,8 @@ class SMModel {
 		this.Time.TicksTaken++
 		if (this.Time.TicksTaken % 60 === 0) {
 			this.Time.Hours++
+			this.CustomerGenerator.restoreProbabilities()
+			this.CustomerGenerator.probabilityDiff(HoursActivity[this.Time.Hours])
 		}
 
 		if (this.Time.Hours === 24) {
@@ -55,6 +71,9 @@ class SMModel {
 			}
 			this.Time.Hours = 0
 			this.SuperMarket.countExpenses()
+			this.CustomerGenerator.restoreProbabilities()
+			this.CustomerGenerator.probabilityDiff(DaysActivity[this.Time.Days])
+			this.CustomerGenerator.probabilityDiff(HoursActivity[this.Time.Hours])
 		}
 	}
 
@@ -69,7 +88,7 @@ class SMModel {
 				if (cbox.CurrentCustomer) {
 					cbox_el.innerHTML = cbox.CurrentCustomer.toString()
 				} else {
-					cbox_el.innerHTML = '<h2>Empty</h2>'
+					cbox_el.innerHTML = '[EMPTY]<br>Price: EMPTY<br>Ticks: EMPTY'
 				}
 			}
 
@@ -82,7 +101,7 @@ class SMModel {
 					cust_el.innerHTML = customer.toString()
 				} else {
 					cust_el.classList.remove('customer')
-					cust_el.innerHTML = '<h3>Empty</h3>'
+					cust_el.innerHTML = '[EMPTY]<br>Price: EMPTY<br>Ticks: EMPTY'
 				}
 			}
 		}
@@ -132,8 +151,8 @@ class SMModel {
 		var results = document.getElementById('results')
 		results.hidden = false
 		results.innerHTML =
-			'<b>Balance</b>: '       + this.SuperMarket.Balance        + '<br>' +
-			'<b>CustomersLeft</b>: ' + this.Runtime.Stat.CustomersLeft + '<br>'
+			'<b>Balance</b>: '       + Math.round(this.SuperMarket.Balance) + '<br>' +
+			'<b>CustomersLeft</b>: ' + this.Runtime.Stat.CustomersLeft      + '<br>'
 	}
 }
 

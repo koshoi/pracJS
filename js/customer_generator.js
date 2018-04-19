@@ -65,7 +65,7 @@ class CustomerGenerator {
 		var d = this.ProbabilityEngine.b - this.ProbabilityEngine.a
 		this.ProbabilityEngine.b -= d * percentage / 100
 		if (this.ProbabilityEngine.b - this.ProbabilityEngine.a < 1) {
-			this.ProbabilityEngine.a++
+			this.ProbabilityEngine.b++
 		}
 	}
 
@@ -74,21 +74,33 @@ class CustomerGenerator {
 		this.ProbabilityEngine.b += d * percentage / 100
 	}
 
+	probabilityDiff(percentage) {
+		if (percentage < 0) {
+			this.probabilityDown(-percentage)
+		} else {
+			this.probabilityUp(percentage)
+		}
+	}
+
 	generateCustomer() {
-		this.NextCustomerTimeLeft = this.ProbabilityEngine.getValue()
-		return new Customer (
-			this.CustomerEngine.TimeEngine.getValue(),
-			this.CustomerEngine.PriceEngine.getValue()
-		)
+		var customers = []
+		while (this.NextCustomerTimeLeft === 0) {
+			customers.push(new Customer (
+				this.CustomerEngine.TimeEngine.getValue(),
+				this.CustomerEngine.PriceEngine.getValue()
+			))
+			this.NextCustomerTimeLeft = this.ProbabilityEngine.getValue()
+		}
+		return customers
 	}
 
 	tick() {
-		if (this.NextCustomerTimeLeft === 1) {
+		this.NextCustomerTimeLeft--
+		if (this.NextCustomerTimeLeft === 0) {
 			return this.generateCustomer()
 		}
 
-		this.NextCustomerTimeLeft--
-		return null
+		return []
 	}
 
 	toString() {
