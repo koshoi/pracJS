@@ -50,8 +50,11 @@ class SuperMarket {
 		var working = this.CashBoxes.filter(function (a) {
 			return a.Working
 		})
-		var delta = this.CommercialExpenses + this.CashierSalary * working.length
-		this.Balance -= this.CommercialExpenses + this.CashierSalary * working.length
+		console.log(Model, this.Balance, working)
+		console.log(this.CommercialExpenses)
+		Model.Runtime.Stat.CommercialExpenses += this.CommercialExpenses
+		Model.Runtime.Stat.SalaryExpenses     += this.CashierSalary * working.length
+		this.Balance -= Model.Runtime.Stat.CommercialExpenses + Model.Runtime.Stat.SalaryExpenses
 	}
 
 	toString() {

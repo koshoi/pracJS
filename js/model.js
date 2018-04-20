@@ -12,19 +12,7 @@ class SMModel {
 		this.CustomerGenerator = new CustomerGenerator(Config.CustomerGenerator)
 		this.Render            = new Render ()
 		this.Working           = true
-		var ce = this.SuperMarket.CommercialExpenses
-		for (var i=0; i<this.SuperMarket.CommercialExpenses % 10000; i++) {
-			this.CustomerGenerator.probabilityUp(this.CustomerGenerator.CommercialExpensesBoost)
-			ce -= 10000
-		}
-		this.CustomerGenerator.probabilityUp(
-			ce
-			* this.CustomerGenerator.CommercialExpensesBoost
-			/ 10000
-		)
-		this.CustomerGenerator.probabilityUp(
-			this.SuperMarket.Discount * this.CustomerGenerator.DiscountBoost
-		)
+		this.tweakSMProbability()
 
 		this.Time = {}
 		this.Time.TicksTaken = 0
@@ -33,7 +21,9 @@ class SMModel {
 
 		this.Runtime = {}
 		this.Runtime.Stat = {}
-		this.Runtime.Stat.CustomersLeft = 0
+		this.Runtime.Stat.CustomersLeft      = 0
+		this.Runtime.Stat.SalaryExpenses     = 0
+		this.Runtime.Stat.CommercialExpenses = 0
 	}
 
 	tick(n_ticks) {
@@ -72,9 +62,27 @@ class SMModel {
 			this.Time.Hours = 0
 			this.SuperMarket.countExpenses()
 			this.CustomerGenerator.restoreProbabilities()
+			this.tweakSMProbability()
 			this.CustomerGenerator.probabilityDiff(DaysActivity[this.Time.Days])
 			this.CustomerGenerator.probabilityDiff(HoursActivity[this.Time.Hours])
 		}
+	}
+
+	tweakSMProbability () {
+		var ce = this.SuperMarket.CommercialExpenses
+		for (var i=0; i<Math.trunc(this.SuperMarket.CommercialExpenses / 10000); i++) {
+			this.CustomerGenerator.probabilityUp(this.CustomerGenerator.CommercialExpensesBoost)
+			ce -= 10000
+			break;
+		}
+		this.CustomerGenerator.probabilityUp(
+			ce
+			* this.CustomerGenerator.CommercialExpensesBoost
+			/ 10000
+		)
+		this.CustomerGenerator.probabilityUp(
+			this.SuperMarket.Discount * this.CustomerGenerator.DiscountBoost
+		)
 	}
 
 	redraw() {
@@ -151,8 +159,10 @@ class SMModel {
 		var results = document.getElementById('results')
 		results.hidden = false
 		results.innerHTML =
-			'<b>Balance</b>: '       + Math.round(this.SuperMarket.Balance) + '<br>' +
-			'<b>CustomersLeft</b>: ' + this.Runtime.Stat.CustomersLeft      + '<br>'
+			'<b>Balance</b>: '            + Math.round(this.SuperMarket.Balance)      + '<br>' +
+			'<b>CustomersLeft</b>: '      + this.Runtime.Stat.CustomersLeft           + '<br>' +
+			'<b>CommercialExpenses</b>: ' + this.Runtime.Stat.CommercialExpenses      + '<br>' +
+			'<b>SalaryExpenses</b>: '     + this.Runtime.Stat.SalaryExpenses          + '<br>'
 	}
 }
 
